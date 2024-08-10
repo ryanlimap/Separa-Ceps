@@ -34,6 +34,8 @@ Lista loadbdceps(char *nomearq) {
         
         // Criar uma nova estrutura t_endereco1
         t_endereco1 *endereco = (t_endereco1 *)malloc(sizeof(t_endereco1));
+
+        // Debug
         if (!endereco) {
             printf("Erro ao alocar memória");
             fclose(file);
