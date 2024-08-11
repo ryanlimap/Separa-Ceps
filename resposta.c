@@ -14,12 +14,20 @@ typedef struct {
     Lista enderecos;
 } t_endereco2;
 
+char *strip(char *s) {
+    int ultimo = strlen(s) - 1;
+    if (s[ultimo] == '\n') {
+        s[ultimo] = '\0';
+    }
+    return s;
+}
+
 // Função para carregar endereços do arquivo
 Lista loadbdceps(char *nomearq) {
     FILE *file = fopen(nomearq, "r");
     if (!file) {
         printf("Erro ao abrir o arquivo");
-        return NULL;
+        return new_lista(); // Retorna uma lista vazia
     }
     
     Lista lista = new_lista();
@@ -27,10 +35,7 @@ Lista loadbdceps(char *nomearq) {
     
     while (fgets(line, sizeof(line), file)) {
         // Remover o caractere de nova linha, se presente
-        int len = strlen(line);
-        if (len > 0 && line[len - 1] == '\n') {
-            line[len - 1] = '\0';
-        }
+        strip(line);
         
         // Criar uma nova estrutura t_endereco1
         t_endereco1 *endereco = (t_endereco1 *)malloc(sizeof(t_endereco1));
