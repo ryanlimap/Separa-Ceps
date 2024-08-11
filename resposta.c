@@ -47,37 +47,25 @@ Lista loadbdceps(char *nomearq) {
             return NULL;
         }
 
-        // Extrair o CEP
-        char *p = line;
-        int i = 0;
-        while (*p != ',' && *p != '\0') {
-            endereco->cep[i++] = *p++;
-        }
-        endereco->cep[i] = '\0';
+        // Utilizar strtok para dividir a linha em tokens
+        char *token = strtok(line, ",");
 
-        // Avançar o ponteiro após a vírgula
-        if (*p == ',') {
-            p++;
+        // Extrair e copiar o CEP
+        if (token != NULL) {
+            strcpy(endereco->cep, token);
         }
 
-        // Extrair o número como uma string
-        i = 0;
-        while (*p != ',' && *p != '\0') {
-            endereco->numero[i++] = *p++;
-        }
-        endereco->numero[i] = '\0';
-
-        // Avançar o ponteiro após a vírgula
-        if (*p == ',') {
-            p++;
+        // Extrair e copiar o número
+        token = strtok(NULL, ",");
+        if (token != NULL) {
+            strcpy(endereco->numero, token);
         }
 
-        // Extrair o nome da família
-        i = 0;
-        while (*p != '\0' && i < sizeof(endereco->familia) - 1) {
-            endereco->familia[i++] = *p++;
+        // Extrair e copiar o nome da família
+        token = strtok(NULL, ",");
+        if (token != NULL) {
+            strcpy(endereco->familia, token);
         }
-        endereco->familia[i] = '\0';
 
         // Adicionar o endereço à lista
         appendLista(lista, endereco);
